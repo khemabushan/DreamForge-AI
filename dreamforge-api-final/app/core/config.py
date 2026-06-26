@@ -36,7 +36,10 @@ class Settings(BaseSettings):
     CELERY_RESULT_BACKEND: str = "redis://localhost:6379/2"
 
     # CORS
-    CORS_ORIGINS: List[str] = ["http://localhost:3000"]
+    CORS_ORIGINS: list[str] = [
+    "http://localhost:3000",
+    "https://dream-forge-ai-mauve.vercel.app",
+]
 
     # Object storage (S3 / R2 compatible)
     STORAGE_ENDPOINT_URL: str | None = None
