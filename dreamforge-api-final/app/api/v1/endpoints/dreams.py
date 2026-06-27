@@ -27,8 +27,7 @@ async def submit_dream(
     user: User = CurrentUser,
     db: AsyncSession = DbSession,
 ) -> DreamRead:
-    """Submit a dream. This persists the dream and enqueues the AI pipeline;
-    it returns immediately rather than waiting for generation to finish.
+    """Submit a dream. This persists the dream and runs the AI pipeline directly.
     """
 
     dream = await DreamService(db).submit_dream(
@@ -37,19 +36,18 @@ async def submit_dream(
     )
 
     try:
-        from app.workers.tasks import run_dream_pipeline
+        from app.workers.tasks import _run_pipeline
 
-        print("Submitting Celery task...")
-        run_dream_pipeline.delay(str(dream.id))
-        print("Celery task submitted.")
+        print("Running pipeline directly...")
+        await _run_pipeline(str(dream.id))
+        print("Pipeline completed.")
 
     except Exception:
-        print("CELERY ERROR:")
+        print("PIPELINE ERROR:")
         traceback.print_exc()
         raise
 
     return DreamRead.model_validate(dream)
-
 @router.get("", response_model=list[DreamListItem])
 async def list_dreams(
     user: User = CurrentUser,
