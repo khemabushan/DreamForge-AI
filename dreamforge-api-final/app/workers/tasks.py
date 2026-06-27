@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from app.core.config import settings
 from app.core.logging import get_logger
 from app.services.pipeline_service import PipelineService
-from app.services.progress_publisher import PipelineProgressPublisher
+#from app.services.progress_publisher import PipelineProgressPublisher
 from app.workers.celery_app import celery_app
 
 logger = get_logger(__name__)
@@ -25,8 +25,7 @@ async def _run_pipeline(dream_id: str) -> None:
 
     try:
         async with session_factory() as db:
-            publisher = PipelineProgressPublisher()
-            service = PipelineService(db, publisher=publisher)
+            service = PipelineService(db, publisher=None)
             await service.run_pipeline_for_dream(UUID(dream_id))
     finally:
         await engine.dispose()
