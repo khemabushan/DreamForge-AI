@@ -8,6 +8,13 @@ Built with FastAPI, Next.js, PostgreSQL, Redis, Celery, OpenAI, and Replicate.
 
 ---
 
+## 🚀 Live Demo
+
+- **Frontend (Vercel):** https://dream-forge-ai-mauve.vercel.app
+- **Backend API (Railway):** https://dreamforge-ai-production.up.railway.app
+- **GitHub Repository:** https://github.com/khemabushan/DreamForge-AI
+
+  
 ## ✨ Features
 
 ### 🧠 AI Dream Understanding
